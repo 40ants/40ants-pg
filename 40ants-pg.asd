@@ -19,6 +19,7 @@
 
 
 (register-system-packages "mito" '(#:mito.class #:mito.db #:mito.dao #:mito.util))
+(register-system-packages "cl-mustache" '(#:mustache))
 (register-system-packages "dbd-postgres" '(#:dbd.postgres))
 (register-system-packages "cl-dbi" '(#:dbi.cache.thread #:dbi.error))
 (register-system-packages "log4cl" '(#:log))
