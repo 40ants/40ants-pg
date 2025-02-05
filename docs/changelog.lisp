@@ -9,5 +9,7 @@
                               "ASDF"
                               "REPL"
                               "HTTP"))
+  (0.2.0 2025-02-05
+         "* Fixed error on non-external `convert-for-driver-type` function.")
   (0.1.0 2023-02-05
          "* Initial version."))
