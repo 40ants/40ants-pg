@@ -6,20 +6,12 @@
 
 ## 40ANTS-PG ASDF System Details
 
-* Version: 0.1.0
-
 * Description: A set of utilities to work with Postgresql using Mito and Common Lisp.
-
 * Licence: Unlicense
-
 * Author: Alexander Artemenko <svetlyak.40wt@gmail.com>
-
 * Homepage: [https://40ants.com/40ants-pg/][4ece]
-
 * Bug tracker: [https://github.com/40ants/40ants-pg/issues][e36e]
-
 * Source control: [GIT][5dfc]
-
 * Depends on: [alexandria][8236], [cl-dbi][6bc3], [cl-mustache][1dd0], [cl-postgres][ce97], [dbd-postgres][0b29], [dbi][a5c3], [ironclad][90b9], [log4cl][7f8b], [mito][5b70], [secret-values][cd18], [serapeum][c41d], [snakes][165e], [sxql][2efd]
 
 [![](https://github-actions.40ants.com/40ants/40ants-pg/matrix.svg?only=ci.run-tests)][4232]

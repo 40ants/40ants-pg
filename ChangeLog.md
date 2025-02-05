@@ -2,6 +2,12 @@
 
 # ChangeLog
 
+<a id="x-2840ANTS-PG-DOCS-2FCHANGELOG-3A-3A-7C0-2E2-2E0-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+
+## 0.2.0 (2025-02-05)
+
+* Fixed error on non-external `convert-for-driver-type` function.
+
 <a id="x-2840ANTS-PG-DOCS-2FCHANGELOG-3A-3A-7C0-2E1-2E0-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
 ## 0.1.0 (2023-02-05)
