@@ -27,13 +27,15 @@
                 #:order-by
                 #:where)
   (:import-from #:serapeum
-                #:fmt))
+                #:fmt)
+  (:import-from #:mito.dao
+                #:convert-for-driver-type))
 (in-package #:40ants-pg/local-time)
 
 
-(defmethod mito.dao:convert-for-driver-type ((driver-type (eql :postgresql))
-                                             (col-type (eql :timestamptz))
-                                             (value local-time:timestamp))
+(defmethod convert-for-driver-type ((driver-type (eql :postgresql))
+                                    (col-type (eql :timestamptz))
+                                    (value local-time:timestamp))
   (local-time:format-rfc3339-timestring nil value
                                         :timezone local-time:+utc-zone+))
 
