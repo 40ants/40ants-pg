@@ -9,3 +9,6 @@
   :pathname "docs"
   :depends-on ("40ants-pg"
                "40ants-pg-docs/index"))
+
+
+(register-system-packages "bordeaux-threads" '(#:bordeaux-threads-2))
