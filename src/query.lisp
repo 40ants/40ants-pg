@@ -9,6 +9,7 @@
   ;; project's check
   (:import-from #:dbd.postgres)
   (:import-from #:mito
+                #:select-by-sql
                 #:object-id
                 #:select-dao)
   (:import-from #:ironclad
@@ -19,17 +20,27 @@
   (:import-from #:secret-values
                 #:ensure-value-revealed)
   (:import-from #:alexandria
-                #:make-keyword
+                #:last-elt
                 #:length=
+                #:make-keyword
                 #:remove-from-plistf
                 #:with-gensyms)
   (:import-from #:sxql
+                #:limit
                 #:order-by
                 #:where)
   (:import-from #:serapeum
                 #:fmt)
+  (:import-from #:40ants-pg/utils
+                #:map-by-id
+                #:make-list-placeholders)
+  (:import-from #:snakes
+                #:yield
+                #:defgenerator)
   (:export #:sql-fetch-all
-           #:execute))
+           #:execute
+           #:select-one-column
+           #:all-objects-iterator))
 (in-package #:40ants-pg/query)
 
 
@@ -52,35 +63,72 @@
 ;;   (apply #'call-next-method class initargs))
 
 
-(defun select-dao-by-ids (class-name ids)
-  (let* ((class (find-class class-name))
-         (pk-name (let ((value (mito.class:table-primary-key class)))
-                    (unless (length= 1 value)
-                      (error "PK should have only one column, to make select-dao-by-ids work. ~S has ~S."
-                             class-name value))
-                    (first value)))
-         (columns (mito.class:table-column-slots class))
-         (pk-column
-           (loop for column in columns
-                 for column-name = (closer-mop:slot-definition-name column)
-                 thereis (and
-                          (string-equal column-name
-                                        pk-name)
-                          column)))
-         (pk-type (when pk-column
-                    (mito.class:table-column-type pk-column))))
-    (values
-     (if ids
-         (select-dao class-name
-           (where (:in (make-keyword pk-name) ids))
-           ;; Чтобы сохранился порядок элементов, такой же как в ids:
-           (order-by (:raw (fmt "array_position(array[~{~A~^, ~}]::~A[], ~A)"
-                                ids
-                                (cond
-                                  ((string-equal pk-type "bigserial")
-                                   "bigint")
-                                  ((string-equal pk-type "serial")
-                                   "integer")
-                                  (t pk-type))
-                                pk-name))))
-         #()))))
+(defun select-dao-by-ids (class-name ids &key
+                                         (id-field "id")
+                                         (id-slot-getter #'object-id)
+                                         (sql "SELECT * FROM {{table}} WHERE \"{{column}}\" in {{placeholders}}"))
+  (when ids
+    (let* ((table-class (find-class class-name))
+           (placeholders (make-list-placeholders ids))
+           (context (list (cons "table"
+                                (mito.class:table-name table-class))
+                          (cons "column"
+                                id-field)
+                          (cons "placeholders"
+                                placeholders)))
+           (full-sql (with-output-to-string (s)
+                       (mustache:render sql context s)))
+           (objects (select-by-sql table-class
+                                   full-sql
+                                   :binds ids))
+           (mapped (map-by-id objects
+                              :id-slot-getter id-slot-getter
+                              :test 'equal)))
+      ;; To keep ordering the same as in the original IDS list:
+      (loop for id in ids
+            collect (gethash id mapped)))))
+
+
+
+(defun batch-update (ids ;; &key (fields "otvetchik_normalized")
+                     )
+  (when ids
+    (let ((query "
+UPDATE {{table}}
+SET otvetchik_normalized = data.otvetchik_normalized
+FROM
+(
+  SELECT unnest(?) as id
+         unnest(?) as otvetchik_normalized
+) as data
+WHERE id = data.id
+ "))
+      (make-list-placeholders ids)
+      (mito:execute-sql query
+                        (list ids)))))
+
+
+(defun select-one-column (query &key binds (column :id))
+  (loop for row in (mito:retrieve-by-sql query :binds binds)
+        collect (getf row column)))
+
+
+(defgenerator all-objects-iterator (class &key (id-slot-getter #'object-id) (id-slot :id) (batch-size 10))
+  "Iterates through all objects of given class fetching them in batches."
+  (let* ((last-id nil))
+    (flet ((get-next-batch ()
+             (let ((objects
+                     (select-dao class
+                       (if last-id
+                           (where (:> id-slot last-id)))
+                       (limit batch-size)
+                       (order-by id-slot))))
+               (when objects
+                 (setf last-id
+                       (funcall id-slot-getter
+                        (last-elt objects)))
+                 objects))))
+      (loop for objects = (get-next-batch) then (get-next-batch)
+            while objects
+            do (loop for obj in objects
+                     do (yield obj))))))
