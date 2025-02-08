@@ -14,14 +14,23 @@
                "40ants-pg/locks"
                "40ants-pg/query"
                "40ants-pg/transactions"
-               "40ants-pg/utils")
+               "40ants-pg/utils"
+               ;; To prevent Mito from trying to load driver on first connect.
+               ;; Sometimes this can cause errors if DBD get's updated by some
+               ;; project's check
+               "dbd-postgres")
   :in-order-to ((test-op (test-op "40ants-pg-tests"))))
 
 
-(register-system-packages "mito" '(#:mito.class #:mito.db #:mito.dao #:mito.util))
+(register-system-packages "mito" '(#:mito.class
+                                   #:mito.class.table
+                                   #:mito.db
+                                   #:mito.dao
+                                   #:mito.util))
 (register-system-packages "cl-mustache" '(#:mustache))
 (register-system-packages "dbd-postgres" '(#:dbd.postgres))
-(register-system-packages "cl-dbi" '(#:dbi.cache.thread #:dbi.error))
+(register-system-packages "cl-dbi" '(#:dbi.cache.thread #:dbi.error #:dbi.driver))
+(register-system-packages "sxql" '(#:sxql.operator #:sxql.sql-type))
 (register-system-packages "log4cl" '(#:log))
 (register-system-packages "slynk" '(#:slynk-api))
 ;; To prevent mito and clack loading these libraries in runtime

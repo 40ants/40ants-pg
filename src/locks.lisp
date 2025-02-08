@@ -3,7 +3,6 @@
   (:import-from #:log)
   (:import-from #:dbi)
   (:import-from #:dbi.error)
-  (:import-from #:cl-postgres)
   ;; To prevent Mito from trying to load driver on first connect.
   ;; Sometimes this can cause errors if DBD get's updated by some
   ;; project's check
@@ -16,18 +15,6 @@
                 #:hmac-digest
                 #:make-hmac
                 #:ascii-string-to-byte-array)
-  (:import-from #:secret-values
-                #:ensure-value-revealed)
-  (:import-from #:alexandria
-                #:make-keyword
-                #:length=
-                #:remove-from-plistf
-                #:with-gensyms)
-  (:import-from #:sxql
-                #:order-by
-                #:where)
-  (:import-from #:serapeum
-                #:fmt)
   (:import-from #:40ants-pg/query
                 #:execute
                 #:sql-fetch-all)

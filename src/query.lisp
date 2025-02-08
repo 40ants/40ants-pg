@@ -1,24 +1,10 @@
 (uiop:define-package #:40ants-pg/query
   (:use #:cl)
-  (:import-from #:log)
   (:import-from #:dbi)
-  (:import-from #:dbi.error)
-  (:import-from #:cl-postgres)
-  ;; To prevent Mito from trying to load driver on first connect.
-  ;; Sometimes this can cause errors if DBD get's updated by some
-  ;; project's check
-  (:import-from #:dbd.postgres)
   (:import-from #:mito
                 #:select-by-sql
                 #:object-id
                 #:select-dao)
-  (:import-from #:ironclad
-                #:octets-to-integer
-                #:hmac-digest
-                #:make-hmac
-                #:ascii-string-to-byte-array)
-  (:import-from #:secret-values
-                #:ensure-value-revealed)
   (:import-from #:alexandria
                 #:last-elt
                 #:length=
@@ -29,14 +15,14 @@
                 #:limit
                 #:order-by
                 #:where)
-  (:import-from #:serapeum
-                #:fmt)
   (:import-from #:40ants-pg/utils
                 #:map-by-id
                 #:make-list-placeholders)
   (:import-from #:snakes
                 #:yield
                 #:defgenerator)
+  (:import-from #:mustache)
+  (:import-from #:mito.class.table)
   (:export #:sql-fetch-all
            #:execute
            #:select-one-column
@@ -71,7 +57,7 @@
     (let* ((table-class (find-class class-name))
            (placeholders (make-list-placeholders ids))
            (context (list (cons "table"
-                                (mito.class:table-name table-class))
+                                (mito.class.table:table-name table-class))
                           (cons "column"
                                 id-field)
                           (cons "placeholders"
