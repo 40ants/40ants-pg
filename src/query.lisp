@@ -26,7 +26,8 @@
   (:export #:sql-fetch-all
            #:execute
            #:select-one-column
-           #:all-objects-iterator))
+           #:all-objects-iterator
+           #:select-dao-by-ids))
 (in-package #:40ants-pg/query)
 
 
@@ -53,6 +54,11 @@
                                          (id-field "id")
                                          (id-slot-getter #'object-id)
                                          (sql "SELECT * FROM {{table}} WHERE \"{{column}}\" in {{placeholders}}"))
+  "Returns CLOS objects with given ids.
+
+   Results are returned in the same order as was in ids list.
+   If some objects were not fetched, nil is returned at it's position
+   in the resulting list."
   (when ids
     (let* ((table-class (find-class class-name))
            (placeholders (make-list-placeholders ids))

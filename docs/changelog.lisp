@@ -27,7 +27,7 @@ New
 
 Function 40ANTS-PG/QUERY:ALL-OBJECTS-ITERATOR now accepts keyword arguments such as `id-slot-getter`, `id-slot` and `batch-size`.
 
-When getting connection it is possible to pass application name. If not passed, then by default it will be searched in DB_APP_NAME
+When getting connection it is possible to pass application name. If not passed, then by default it will be searched in `DB_APP_NAME`
 environment variable or created as concatenation of \"40ants-pg-\" and current thread name.
 
 Function 40ANTS-PG/QUERY:SELECT-DAO-BY-IDS now can accept customized query.

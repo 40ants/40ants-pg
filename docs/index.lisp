@@ -13,6 +13,8 @@
                 #:@changelog)
   (:import-from #:docs-config
                 #:docs-config)
+  (:import-from #:40ants-doc/autodoc
+                #:defautodoc)
   (:export #:@index
            #:@readme
            #:@changelog))
@@ -50,7 +52,8 @@
 ![Quicklisp](http://quickdocs.org/badge/40ants-pg.svg)
 "
   (@installation section)
-  (@usage section))
+  (@usage section)
+  (@api section))
 
 
 (defsection-copy @readme @index)
@@ -75,3 +78,7 @@ You can install this library from Quicklisp, but you want to receive updates qui
   "
 TODO: Write a library description. Put some examples here.
 ")
+
+
+(defautodoc @api (:system "40ants-pg"
+                  :ignore-words ("CLOS")))
