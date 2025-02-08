@@ -29,6 +29,8 @@
   (:import-from #:serapeum
                 #:fmt)
   (:import-from #:40ants-pg/settings
+                #:get-default-application-name
+                #:get-application-name
                 #:get-db-pass
                 #:get-db-user
                 #:get-db-name
@@ -38,6 +40,8 @@
                 #:execute)
   (:import-from #:40ants-pg/transactions
                 #:call-with-transaction)
+  (:import-from #:str
+                #:shorten)
   (:export
    #:connection-error
    #:error-message
@@ -65,38 +69,62 @@
 (defun inner-connect (&key host database-name username password
                            (port 5432)
                            (cached *cached-default*)
+                           (application-name (get-default-application-name))
                            (use-ssl :no))
   "This function is used to leave a trace in the backtrace and let
    logger know which arguments are secret."
-  
-  (funcall (if cached
-               'cl-dbi:connect-cached
-               'cl-dbi:connect)
-           :postgres
-           :host host
-           :port port
-           :database-name database-name
-           :username username
-           :password (ensure-value-revealed password)
-           :use-ssl use-ssl))
+
+  (let ((application-name
+          ;; This is a limit of Postgres.
+          ;; If application name is larger than this limit
+          ;; then Postgres will trim it or even can just
+          ;; ignore the value.
+          (shorten 63 application-name)))
+    (funcall (if cached
+                 'cl-dbi:connect-cached
+                 'cl-dbi:connect)
+             :postgres
+             :host host
+             :port port
+             :database-name database-name
+             :username username
+             :password (ensure-value-revealed password)
+             :application-name application-name
+             :use-ssl use-ssl)))
 
 
 (defun connect (&key host database-name username password
                      port
                      (cached *cached-default*)
+                     (application-name nil)
                      (use-ssl :no))
-  (inner-connect :host (or host
-                           (get-db-host))
-                 :port (or port
-                           (get-db-port))
-                 :database-name (or database-name
-                                    (get-db-name))
-                 :username (or username
-                               (get-db-user))
-                 :password (or password
-                               (get-db-pass))
-                 :cached cached
-                 :use-ssl use-ssl))
+  (let ((host (or host
+                  (get-db-host)))
+        (port (or port
+                  (get-db-port)))
+        (dbname (or database-name
+                    (get-db-name)))
+        (application-name (or application-name
+                              (get-application-name)))
+        (username (or username
+                      (get-db-user))))
+      (log:debug "Making new connection (host=~A port=~A username=~A dbname=~A use-ssl=~A cached=~A)"
+                 host
+                 port
+                 username
+                 dbname
+                 use-ssl
+                 cached)
+  
+    (inner-connect :host host
+                   :port port
+                   :database-name dbname
+                   :username username
+                   :password (or password
+                                 (get-db-pass))
+                   :cached cached
+                   :application-name application-name
+                   :use-ssl use-ssl)))
 
 
 (defun connect-toplevel ()

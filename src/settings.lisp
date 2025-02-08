@@ -28,11 +28,16 @@
                 #:where)
   (:import-from #:serapeum
                 #:fmt)
+  (:import-from #:bordeaux-threads-2
+                #:thread-name
+                #:current-thread)
   (:export #:get-db-user
            #:get-db-pass
            #:get-db-name
            #:get-db-port
-           #:get-db-host))
+           #:get-db-host
+           #:get-application-name
+           #:get-default-application-name))
 (in-package #:40ants-pg/settings)
 
 
@@ -55,4 +60,14 @@
 
 (defun get-db-pass ()
   (uiop:getenv "DB_PASSWORD"))
+
+
+(defun get-default-application-name ()
+  (format nil "40ants-pg-~A"
+          (thread-name
+           (current-thread))))
+
+(defun get-application-name ()
+  (or (uiop:getenv "DB_APP_NAME")
+      (get-default-application-name)))
 
