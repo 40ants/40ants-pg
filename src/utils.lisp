@@ -77,21 +77,19 @@
                      :binds ids))))
 
 
-
-
-(defgenerator all-objects-iterator (class)
+(defgenerator all-objects-iterator (class &key (id-slot-getter #'object-id) (id-slot :id) (batch-size 10))
   "Iterates through all objects of given class fetching them in batches."
   (let* ((last-id nil))
     (flet ((get-next-batch ()
              (let ((objects
                      (select-dao class
                        (if last-id
-                           (where (:> :id last-id)))
-                       (limit 10)
-                       (order-by :id))))
+                           (where (:> id-slot last-id)))
+                       (limit batch-size)
+                       (order-by id-slot))))
                (when objects
                  (setf last-id
-                       (object-id
+                       (funcall id-slot-getter
                         (last-elt objects)))
                  objects))))
       (loop for objects = (get-next-batch) then (get-next-batch)
