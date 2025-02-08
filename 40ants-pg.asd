@@ -35,3 +35,4 @@
 (register-system-packages "slynk" '(#:slynk-api))
 ;; To prevent mito and clack loading these libraries in runtime
 (register-system-packages "dbd-postgres" '(#:dbd.postgres))
+(register-system-packages "bordeaux-threads" '(#:bordeaux-threads-2))
