@@ -51,7 +51,7 @@
         },
         {
           "name": "Run Linter",
-          "run": "qlot exec 40ants-linter --system \"40ants-pg, 40ants-pg-docs, 40ants-pg-tests\"",
+          "run": "qlot exec 40ants-linter --system \"40ants-pg, 40ants-pg-docs, 40ants-pg-tests\" --imports",
           "shell": "bash"
         }
       ]
