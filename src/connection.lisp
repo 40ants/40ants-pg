@@ -51,9 +51,11 @@
    #:with-connection))
 (in-package #:40ants-pg/connection)
 
-;; TODO: разобраться почему при использовании pool,
-;; запросы через раз зависают. Пока не кэшируем:
-(defparameter *cached-default* nil)
+;; TODO: эту переменную я использовал, чтобы временно
+;; отключить кэширование запросов, так как какие-то запросы
+;; через раз зависали. Но на sud-track это наоборот вызывало
+;; зависания. Так что включил кэширование обратно:
+(defparameter *cached-default* t)
 
 
 (define-condition connection-error (error)
@@ -166,6 +168,7 @@
            ;; reuse the same connection and postgres savepoints.
            (cond ((and *was-cached*
                        mito:*connection*)
+                  (log:debug "Reusing current connection")
                   mito:*connection*)
                  (t
                   (apply #'connect
