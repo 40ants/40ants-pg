@@ -9,7 +9,15 @@
                               "ASDF"
                               "REPL"
                               "DB_APP_NAME"
+                              "SECRET-VALUES:SECRET-VALUE"
                               "HTTP"))
+  (0.4.0 2026-01-09
+         "
+Changes
+=======
+
+Now password, read from DB_PASSWORD is wrapped into SECRET-VALUES:SECRET-VALUE to prevent it's leak to the logs during printing backtrace.
+")
   (0.3.0 2025-02-08
          "
 Backward Incompatible Changes
