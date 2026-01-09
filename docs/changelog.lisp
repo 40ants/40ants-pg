@@ -9,6 +9,7 @@
                               "ASDF"
                               "REPL"
                               "DB_APP_NAME"
+                              "DB_PASSWORD"
                               "SECRET-VALUES:SECRET-VALUE"
                               "HTTP"))
   (0.4.0 2026-01-09
