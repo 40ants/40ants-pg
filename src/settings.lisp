@@ -3,6 +3,8 @@
   (:import-from #:bordeaux-threads-2
                 #:thread-name
                 #:current-thread)
+  (:import-from #:secret-values
+                #:conceal-value)
   (:export #:get-db-user
            #:get-db-pass
            #:get-db-name
@@ -31,7 +33,8 @@
       "root"))
 
 (defun get-db-pass ()
-  (uiop:getenv "DB_PASSWORD"))
+  (conceal-value
+   (uiop:getenv "DB_PASSWORD")))
 
 
 (defun get-default-application-name ()
