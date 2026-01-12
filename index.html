@@ -1,0 +1,319 @@
+<html lang=en>
+ <head>
+  <meta charset=UTF-8><meta name=viewport
+      content="width=device-width, initial-scale=1">
+  <title>40ants-pg - A set of utilities to work with Postgresql using Mito and 
+   Common Lisp.</title>
+  <link rel=alternate
+        href="https://40ants.com/40ants-pg/changelog.xml"
+        type="application/rss+xml">
+  <link rel=stylesheet type="text/css"
+        href=theme.css>
+  <script type="text/javascript" src=jquery.js></script>
+  <script type="text/javascript" src=toc.js></script>
+  <script type="text/javascript">$(document).ready(function() {$('a:has(img)').css('border-bottom', 'none')})</script>
+  <link rel=stylesheet type="text/css"
+      href=highlight.min.css>
+  <script type="text/javascript"
+          src=highlight.min.js></script>
+  <script type="text/javascript">hljs.highlightAll();</script>
+<style type="text/css">
+/* Стили для сворачиваемого меню */
+.sidebar ul ul {
+  display: none; /* Скрываем все подменю по умолчанию */
+  margin-left: 0.5em;
+}
+
+.sidebar li.expanded > ul {
+  display: block; /* Показываем подменю для развернутых элементов */
+}
+
+/* Стили для пунктов с подменю */
+.sidebar li.has-children > a {
+  cursor: pointer;
+  position: relative;
+  padding-left: 1.2em;
+}
+
+.sidebar li.has-children > p > a {
+  position: relative;
+  left: -1rem;
+}
+
+.sidebar li.has-children > p > a::before {
+  content:"►";
+}
+
+.sidebar li.has-children.expanded > p > a::before {
+  content: "▼";
+  position: relative;
+  left: -0.08rem;
+}
+
+/* Подсветка активного пункта */
+.sidebar li.active > a {
+  font-weight: bold;
+}
+
+/* Если активная страница находится в подменю, раскрываем родителя */
+.sidebar li.active-parent {
+  font-weight: normal;
+}
+
+.sidebar li.active-parent > ul {
+  display: block;
+}
+</style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FL71WXK73K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-FL71WXK73K');
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(42462884, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/42462884" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+ </head>
+ <body>
+  <div class=page><a id=fork-me href="https://github.com/40ants/40ants-pg">Fork me on GitHub</a>
+   <div class=navbar>
+    <div class=navbar-inner>
+     <a class=brand href="/">
+      <img class=logo
+           src="https://40ants.com/img/logo.svg"></a>
+     <ul class=nav>
+      <li><a href="/posts/">Blog</a>
+      <li><a href="/ru/posts/">Blog (RU)</a>
+      <li><a href="/tips/">Lisp Tips</a>
+      <li><a href="/projects/">Our Projects</a>
+      <li><a href="/about/">About</a>
+     </ul>
+    </div>
+   </div>
+   <input type=checkbox id=sidebar-check>
+   <label for=sidebar-check>
+    <div id=sidebar-trigger>
+     <span></span><span></span><span></span>
+    </div></label><div class=sidebar><div class=header><form class=search method=GET action="search/">
+      <input type=text name=q>
+      <input type=submit value=Search><span id=search-progress></span>
+     </form>
+    </div><div class=content><div class=page-toc><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ants-pg - A set of utilities to work with Postgresql using Mito and Common Lisp.</a></p><ul><li><p><a href="#40-ants-pg-asdf-system-details" data-document="" data-node="40-ants-pg-asdf-system-details">40ANTS-PG ASDF System Details</a></p></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Installation</a></p></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40USAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40USAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Usage</a></p></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">API</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ANTS-PG/CONNECTION</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Classes</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-24CONNECTION-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-24CONNECTION-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">CONNECTION-ERROR</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Functions</a></p></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Macros</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ANTS-PG/LOCKS</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Classes</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24LOCK-TIMEOUT-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24LOCK-TIMEOUT-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">LOCK-TIMEOUT</a></p></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24UNABLE-TO-AQUIRE-LOCK-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24UNABLE-TO-AQUIRE-LOCK-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">UNABLE-TO-AQUIRE-LOCK</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Macros</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FQUERY-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FQUERY-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ANTS-PG/QUERY</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FQUERY-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FQUERY-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Functions</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FSETTINGS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FSETTINGS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ANTS-PG/SETTINGS</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FSETTINGS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FSETTINGS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Functions</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FTRANSACTIONS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FTRANSACTIONS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ANTS-PG/TRANSACTIONS</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FTRANSACTIONS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FTRANSACTIONS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Macros</a></p></li></ul></li><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FUTILS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FUTILS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">40ANTS-PG/UTILS</a></p><ul><li><p><a href="#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FUTILS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FUTILS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Functions</a></p></li></ul></li></ul></li></ul></li><li><p><a href="changelog/#x-2840ANTS-PG-DOCS-2FCHANGELOG-3A-40CHANGELOG-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="changelog/" data-node="x-2840ANTS-PG-DOCS-2FCHANGELOG-3A-40CHANGELOG-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">ChangeLog</a></p></li></ul>
+     </div>
+    </div><div class=footer>
+     <a href="https://40ants.com/doc">[generated by 40ANTS-DOC]</a>
+    </div>
+   </div><div class=content role=main><h1>40ants-pg - A set of utilities to work with Postgresql using Mito and Common Lisp.<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h1><h2 id="40-ants-pg-asdf-system-details">40ANTS-PG ASDF System Details</h2><ul><li><p>Description: A set of utilities to work with Postgresql using Mito and Common Lisp.</p></li><li><p>Licence: Unlicense</p></li><li><p>Author: Alexander Artemenko &lt;svetlyak.40wt@gmail.com&gt;</p></li><li><p>Homepage: <a href="https://40ants.com/40ants-pg/">https://40ants.com/40ants-pg/</a></p></li><li><p>Bug tracker: <a href="https://github.com/40ants/40ants-pg/issues">https://github.com/40ants/40ants-pg/issues</a></p></li><li><p>Source control: <a href="https://github.com/40ants/40ants-pg">GIT</a></p></li><li><p>Depends on: <a href="https://quickdocs.org/alexandria">alexandria</a>, <a href="https://quickdocs.org/bordeaux-threads">bordeaux-threads</a>, <a href="https://quickdocs.org/cl-dbi">cl-dbi</a>, <a href="https://quickdocs.org/cl-mustache">cl-mustache</a>, <a href="https://quickdocs.org/dbd-postgres">dbd-postgres</a>, <a href="https://quickdocs.org/dbi">dbi</a>, <a href="https://quickdocs.org/ironclad">ironclad</a>, <a href="https://quickdocs.org/local-time">local-time</a>, <a href="https://quickdocs.org/log4cl">log4cl</a>, <a href="https://quickdocs.org/mito">mito</a>, <a href="https://quickdocs.org/secret-values">secret-values</a>, <a href="https://quickdocs.org/serapeum">serapeum</a>, <a href="https://quickdocs.org/snakes">snakes</a>, <a href="https://quickdocs.org/str">str</a>, <a href="https://quickdocs.org/sxql">sxql</a></p></li></ul><p><a href="https://github.com/40ants/40ants-pg/actions"><img src="https://github-actions.40ants.com/40ants/40ants-pg/matrix.svg?only=ci.run-tests"/></a></p><p><img src="http://quickdocs.org/badge/40ants-pg.svg"/></p><h2>Installation<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h2><p>You can install this library from Quicklisp, but you want to receive updates quickly, then install it from Ultralisp.org:</p><pre><code class="">(ql-dist:install-dist &quot;http://dist.ultralisp.org/&quot;
+                      :prompt nil)
+(ql:quickload :40ants-pg)</code></pre><h2>Usage<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40USAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40USAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h2><p><code>TODO</code>: Write a library description. Put some examples here.</p><h2>API<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h2><h3>40ANTS-PG/CONNECTION<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2820-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FCONNECTION-22-29-20PACKAGE-29 id=x-28-23A-28-2820-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FCONNECTION-22-29-20PACKAGE-29>40ants-pg/connection</a></div></div><a class=bullet-link href=#x-28-23A-28-2820-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FCONNECTION-22-29-20PACKAGE-29></a></div></div><h4>Classes<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><h5>CONNECTION-ERROR<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-24CONNECTION-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FCONNECTION-24CONNECTION-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L49">condition</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECTION-ERROR-20CONDITION-29 id=x-2840ANTS-PG-2FCONNECTION-3ACONNECTION-ERROR-20CONDITION-29>40ants-pg/connection:connection-error</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECTION-ERROR-20CONDITION-29></a></div></div><p><b>Readers</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L49">reader</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FCONNECTION-3AERROR-MESSAGE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FCONNECTION-3ACONNECTION-ERROR-29-29 id=x-2840ANTS-PG-2FCONNECTION-3AERROR-MESSAGE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FCONNECTION-3ACONNECTION-ERROR-29-29>40ants-pg/connection:error-message</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:message)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FCONNECTION-3AERROR-MESSAGE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FCONNECTION-3ACONNECTION-ERROR-29-29></a></div></div><h4>Functions<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L86">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECT-20FUNCTION-29 id=x-2840ANTS-PG-2FCONNECTION-3ACONNECT-20FUNCTION-29>40ants-pg/connection:connect</a></div><div class=object-args><span class=locative-args>&amp;key host database-name username password port (cached \*cached-default\*) (application-name nil) (use-ssl :no)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECT-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L120">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECT-TOPLEVEL-20FUNCTION-29 id=x-2840ANTS-PG-2FCONNECTION-3ACONNECT-TOPLEVEL-20FUNCTION-29>40ants-pg/connection:connect-toplevel</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECT-TOPLEVEL-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L124">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECT-TOPLEVEL-IN-DEV-20FUNCTION-29 id=x-2840ANTS-PG-2FCONNECTION-3ACONNECT-TOPLEVEL-IN-DEV-20FUNCTION-29>40ants-pg/connection:connect-toplevel-in-dev</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FCONNECTION-3ACONNECT-TOPLEVEL-IN-DEV-20FUNCTION-29></a></div></div><h4>Macros<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FCONNECTION-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/connection.lisp#L184">macro</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FCONNECTION-3AWITH-CONNECTION-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29 id=x-2840ANTS-PG-2FCONNECTION-3AWITH-CONNECTION-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29>40ants-pg/connection:with-connection</a></div><div class=object-args><span class=locative-args>(&amp;rest connect-options) &amp;body body</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FCONNECTION-3AWITH-CONNECTION-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29></a></div><div class=bullet-content><p>Establish a new connection and start transaction</p></div></div><h3>40ANTS-PG/LOCKS<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FLOCKS-22-29-20PACKAGE-29 id=x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FLOCKS-22-29-20PACKAGE-29>40ants-pg/locks</a></div></div><a class=bullet-link href=#x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FLOCKS-22-29-20PACKAGE-29></a></div></div><h4>Classes<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><h5>LOCK-TIMEOUT<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24LOCK-TIMEOUT-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24LOCK-TIMEOUT-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L64">condition</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-20CONDITION-29 id=x-2840ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-20CONDITION-29>40ants-pg/locks:lock-timeout</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-20CONDITION-29></a></div><div class=bullet-content><p>Raised when you are trying to get lock to was unable to do this during current lock_timeout.</p></div></div><p><b>Readers</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L64">reader</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-29-29 id=x-2840ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-29-29>40ants-pg/locks:lock-timeout</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:timeout)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3ALOCK-TIMEOUT-29-29></a></div></div><h5>UNABLE-TO-AQUIRE-LOCK<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24UNABLE-TO-AQUIRE-LOCK-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FLOCKS-24UNABLE-TO-AQUIRE-LOCK-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L47">condition</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-20CONDITION-29 id=x-2840ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-20CONDITION-29>40ants-pg/locks:unable-to-aquire-lock</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-20CONDITION-29></a></div><div class=bullet-content><p>Signaled if some thread was unable to get a lock on a database.</p></div></div><p><b>Readers</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L47">reader</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-KEY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-29-29 id=x-2840ANTS-PG-2FLOCKS-3ALOCK-KEY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-29-29>40ants-pg/locks:lock-key</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:key)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-KEY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L47">reader</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-NAME-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-29-29 id=x-2840ANTS-PG-2FLOCKS-3ALOCK-NAME-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-29-29>40ants-pg/locks:lock-name</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:lock-name)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FLOCKS-3ALOCK-NAME-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-2040ANTS-PG-2FLOCKS-3AUNABLE-TO-AQUIRE-LOCK-29-29></a></div></div><h4>Macros<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FLOCKS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/locks.lisp#L120">macro</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FLOCKS-3AWITH-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29 id=x-2840ANTS-PG-2FLOCKS-3AWITH-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29>40ants-pg/locks:with-lock</a></div><div class=object-args><span class=locative-args>(name &amp;key (block t) (timeout 3) (signal-on-failure t)) &amp;body body</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FLOCKS-3AWITH-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29></a></div></div><h3>40ANTS-PG/QUERY<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FQUERY-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FQUERY-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/query.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FQUERY-22-29-20PACKAGE-29 id=x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FQUERY-22-29-20PACKAGE-29>40ants-pg/query</a></div></div><a class=bullet-link href=#x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FQUERY-22-29-20PACKAGE-29></a></div></div><h4>Functions<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FQUERY-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FQUERY-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/query.lisp#L108">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FQUERY-3AALL-OBJECTS-ITERATOR-20FUNCTION-29 id=x-2840ANTS-PG-2FQUERY-3AALL-OBJECTS-ITERATOR-20FUNCTION-29>40ants-pg/query:all-objects-iterator</a></div><div class=object-args><span class=locative-args>class &amp;key (id-slot-getter #&#39;object-id) (id-slot :id) (batch-size 10)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FQUERY-3AALL-OBJECTS-ITERATOR-20FUNCTION-29></a></div><div class=bullet-content><p>Iterates through all objects of given class fetching them in batches.</p></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/query.lisp#L34">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FQUERY-3AEXECUTE-20FUNCTION-29 id=x-2840ANTS-PG-2FQUERY-3AEXECUTE-20FUNCTION-29>40ants-pg/query:execute</a></div><div class=object-args><span class=locative-args>sql &amp;rest params</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FQUERY-3AEXECUTE-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/query.lisp#L53">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FQUERY-3ASELECT-DAO-BY-IDS-20FUNCTION-29 id=x-2840ANTS-PG-2FQUERY-3ASELECT-DAO-BY-IDS-20FUNCTION-29>40ants-pg/query:select-dao-by-ids</a></div><div class=object-args><span class=locative-args>CLASS-NAME IDS &amp;KEY (ID-FIELD &quot;id&quot;) (ID-SLOT-GETTER #&#39;OBJECT-ID) (SQL &quot;SELECT \* FROM {{table}} WHERE \&quot;{{column}}\&quot; in {{placeholders}}&quot;)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FQUERY-3ASELECT-DAO-BY-IDS-20FUNCTION-29></a></div><div class=bullet-content><p>Returns <code>CLOS</code> objects with given ids.</p><p>Results are returned in the same order as was in ids list.
+If some objects were not fetched, nil is returned at it's position
+in the resulting list.</p></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/query.lisp#L103">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FQUERY-3ASELECT-ONE-COLUMN-20FUNCTION-29 id=x-2840ANTS-PG-2FQUERY-3ASELECT-ONE-COLUMN-20FUNCTION-29>40ants-pg/query:select-one-column</a></div><div class=object-args><span class=locative-args>query &amp;key binds (column :id)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FQUERY-3ASELECT-ONE-COLUMN-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/query.lisp#L38">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FQUERY-3ASQL-FETCH-ALL-20FUNCTION-29 id=x-2840ANTS-PG-2FQUERY-3ASQL-FETCH-ALL-20FUNCTION-29>40ants-pg/query:sql-fetch-all</a></div><div class=object-args><span class=locative-args>sql &amp;rest params</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FQUERY-3ASQL-FETCH-ALL-20FUNCTION-29></a></div></div><h3>40ANTS-PG/SETTINGS<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FSETTINGS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FSETTINGS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2818-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FSETTINGS-22-29-20PACKAGE-29 id=x-28-23A-28-2818-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FSETTINGS-22-29-20PACKAGE-29>40ants-pg/settings</a></div></div><a class=bullet-link href=#x-28-23A-28-2818-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FSETTINGS-22-29-20PACKAGE-29></a></div></div><h4>Functions<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FSETTINGS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FSETTINGS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L45">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-APPLICATION-NAME-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-APPLICATION-NAME-20FUNCTION-29>40ants-pg/settings:get-application-name</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-APPLICATION-NAME-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L18">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-HOST-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-DB-HOST-20FUNCTION-29>40ants-pg/settings:get-db-host</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-HOST-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L27">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-NAME-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-DB-NAME-20FUNCTION-29>40ants-pg/settings:get-db-name</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-NAME-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L35">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-PASS-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-DB-PASS-20FUNCTION-29>40ants-pg/settings:get-db-pass</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-PASS-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L22">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-PORT-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-DB-PORT-20FUNCTION-29>40ants-pg/settings:get-db-port</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-PORT-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L31">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-USER-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-DB-USER-20FUNCTION-29>40ants-pg/settings:get-db-user</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DB-USER-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/settings.lisp#L40">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DEFAULT-APPLICATION-NAME-20FUNCTION-29 id=x-2840ANTS-PG-2FSETTINGS-3AGET-DEFAULT-APPLICATION-NAME-20FUNCTION-29>40ants-pg/settings:get-default-application-name</a></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FSETTINGS-3AGET-DEFAULT-APPLICATION-NAME-20FUNCTION-29></a></div></div><h3>40ANTS-PG/TRANSACTIONS<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FTRANSACTIONS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FTRANSACTIONS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/transactions.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2822-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FTRANSACTIONS-22-29-20PACKAGE-29 id=x-28-23A-28-2822-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FTRANSACTIONS-22-29-20PACKAGE-29>40ants-pg/transactions</a></div></div><a class=bullet-link href=#x-28-23A-28-2822-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FTRANSACTIONS-22-29-20PACKAGE-29></a></div></div><h4>Macros<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FTRANSACTIONS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FTRANSACTIONS-3FMacros-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/transactions.lisp#L19">macro</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FTRANSACTIONS-3AWITH-TRANSACTION-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29 id=x-2840ANTS-PG-2FTRANSACTIONS-3AWITH-TRANSACTION-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29>40ants-pg/transactions:with-transaction</a></div><div class=object-args><span class=locative-args>&amp;body body</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FTRANSACTIONS-3AWITH-TRANSACTION-20-2840ANTS-DOC-2FLOCATIVES-3AMACRO-29-29></a></div></div><h3>40ANTS-PG/UTILS<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FUTILS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-4040ANTS-PG-2FUTILS-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/utils.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FUTILS-22-29-20PACKAGE-29 id=x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FUTILS-22-29-20PACKAGE-29>40ants-pg/utils</a></div></div><a class=bullet-link href=#x-28-23A-28-2815-29-20BASE-CHAR-20-2E-20-2240ANTS-PG-2FUTILS-22-29-20PACKAGE-29></a></div></div><h4>Functions<a class=header-link
+     href=#x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FUTILS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-2840ANTS-PG-DOCS-2FINDEX-3A-3A-7C-4040ANTS-PG-2FUTILS-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/utils.lisp#L23">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FUTILS-3AMAKE-LIST-PLACEHOLDERS-20FUNCTION-29 id=x-2840ANTS-PG-2FUTILS-3AMAKE-LIST-PLACEHOLDERS-20FUNCTION-29>40ants-pg/utils:make-list-placeholders</a></div><div class=object-args><span class=locative-args>list</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FUTILS-3AMAKE-LIST-PLACEHOLDERS-20FUNCTION-29></a></div><div class=bullet-content><p>Given a list of items, returns a string like &quot;(?,?,?)&quot;
+where number of questionmarks corresponds to number of list items.</p></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/40ants-pg/blob/036e79ff65221db59fbdb5d30e2389855032ce43/src/utils.lisp#L13">function</a><div class=reference-object><div class=object-name><a href=#x-2840ANTS-PG-2FUTILS-3AMAP-BY-ID-20FUNCTION-29 id=x-2840ANTS-PG-2FUTILS-3AMAP-BY-ID-20FUNCTION-29>40ants-pg/utils:map-by-id</a></div><div class=object-args><span class=locative-args>dao-objects &amp;key (id-slot-getter #&#39;object-id) (test &#39;eql)</span></div></div><a class=bullet-link href=#x-2840ANTS-PG-2FUTILS-3AMAP-BY-ID-20FUNCTION-29></a></div></div>
+   </div><div class=footer>
+    <hr class=separator>
+    <p class=fineprint>Created with passion by <em>40Ants</em><a class=lisp-logo
+     href="http://lisp-lang.org/">
+      <img
+           src="https://40ants.com/img/made-with-lisp.svg"></a>
+   </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Ключ для localStorage
+  const STORAGE_KEY = '40ants-pg-docs-menu-state';
+  
+  // Загружаем сохраненное состояние меню
+  function loadMenuState() {
+    try {
+      const savedState = localStorage.getItem(STORAGE_KEY);
+      return savedState ? JSON.parse(savedState) : {};
+    } catch (e) {
+      console.error('Ошибка при загрузке состояния меню:', e);
+      return {};
+    }
+  }
+  
+  // Сохраняем текущее состояние меню
+  function saveMenuState(state) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      console.error('Ошибка при сохранении состояния меню:', e);
+    }
+  }
+  
+  // Получаем уникальный идентификатор для пункта меню
+  function getMenuItemId(item) {
+    const link = item.querySelector('a');
+    if (!link) return null;
+    
+    // Используем текст ссылки как идентификатор
+    // Можно также использовать href, но он может меняться в зависимости от текущей страницы
+    return link.innerText.trim();
+  }
+  
+  // Загружаем сохраненное состояние
+  const menuState = loadMenuState();
+  
+  // Находим все пункты меню с подпунктами
+  const menuItems = document.querySelectorAll('.sidebar li');
+  
+  // Обрабатываем каждый пункт меню
+  menuItems.forEach(item => {
+    const subMenu = item.querySelector('ul');
+    
+    // Если у пункта есть подменю
+    if (subMenu) {
+      const itemId = getMenuItemId(item);
+      item.classList.add('has-children');
+      
+      // Восстанавливаем состояние из localStorage, если оно сохранено
+      if (itemId && menuState[itemId]) {
+        item.classList.add('expanded');
+      }
+      
+      // Добавляем обработчик клика
+      const link = item.querySelector('a');
+      if (link) {
+        link.addEventListener('click', function(e) {
+          // Останавливаем переход по ссылке только если кликнули по пункту с подменю
+          if (item.classList.contains('has-children')) {
+            e.preventDefault();
+            
+            // Переключаем класс для раскрытия/скрытия
+            item.classList.toggle('expanded');
+            
+            // Сохраняем новое состояние
+            if (itemId) {
+              if (item.classList.contains('expanded')) {
+                menuState[itemId] = true;
+              } else {
+                delete menuState[itemId];
+              }
+              saveMenuState(menuState);
+            }
+          }
+        });
+      }
+    }
+  });
+  
+  // Функция для поиска и раскрытия родителей активного пункта
+  function expandActiveItemParents() {
+    const activeItem = document.querySelector('.sidebar li.active');
+    if (activeItem) {
+      let parent = activeItem.parentElement;
+      
+      while (parent) {
+        if (parent.tagName === 'UL' && parent.parentElement && parent.parentElement.tagName === 'LI') {
+          parent.parentElement.classList.add('expanded');
+          parent.parentElement.classList.add('active-parent');
+          
+          // Сохраняем состояние активного родителя
+          const parentItem = parent.parentElement;
+          const parentId = getMenuItemId(parentItem);
+          if (parentId) {
+            menuState[parentId] = true;
+          }
+        }
+        parent = parent.parentElement;
+      }
+      
+      // Сохраняем обновленное состояние после раскрытия активных родителей
+      saveMenuState(menuState);
+    }
+  }
+  
+  // Запускаем функцию для текущей страницы
+  expandActiveItemParents();
+});
+</script>
+
+
+  </div>
+ </body>
+</html>

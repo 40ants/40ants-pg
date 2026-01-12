@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rss version="2.0">
+    <channel>
+        <title>40ants-pg-docs ChangeLog</title>
+        <link>https://40ants.com/40ants-pg/</link>
+        <generator>xml-emitter</generator>
+        <language>en-us</language>
+        <item>
+            <title>0.4.0  (2026-01-09)</title>
+            <description>&lt;h1 id=&quot;changes&quot;&gt;Changes&lt;/h1&gt;&lt;p&gt;Now password, read from &lt;code&gt;DB_PASSWORD&lt;/code&gt; is wrapped into &lt;code&gt;SECRET-VALUES:SECRET-VALUE&lt;/code&gt; to prevent it&apos;s leak to the logs during printing backtrace.&lt;/p&gt;</description>
+            <pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate>
+        </item>
+        <item>
+            <title>0.3.0  (2025-02-08)</title>
+            <description>&lt;h1 id=&quot;backward-incompatible-changes&quot;&gt;Backward Incompatible Changes&lt;/h1&gt;&lt;p&gt;Connection caching now is turned on by default.&lt;/p&gt;&lt;p&gt;These symbols were moved from 40ants-pg/utils to 40ants-pg/query:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;select-dao-by-ids&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;all-objercts-iterator&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h1 id=&quot;new&quot;&gt;New&lt;/h1&gt;&lt;p&gt;Function &lt;a href=&quot;https://40ants.com/40ants-pg/#x-2840ANTS-PG-2FQUERY-3AALL-OBJECTS-ITERATOR-20FUNCTION-29&quot; data-document=&quot;https://40ants.com/40ants-pg/&quot; data-node=&quot;x-2840ANTS-PG-2FQUERY-3AALL-OBJECTS-ITERATOR-20FUNCTION-29&quot;&gt;&lt;code&gt;40ants-pg/query:all-objects-iterator&lt;/code&gt;&lt;/a&gt; now accepts keyword arguments such as &lt;code&gt;id-slot-getter&lt;/code&gt;, &lt;code&gt;id-slot&lt;/code&gt; and &lt;code&gt;batch-size&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;When getting connection it is possible to pass application name. If not passed, then by default it will be searched in &lt;code&gt;DB_APP_NAME&lt;/code&gt;
+environment variable or created as concatenation of &amp;quot;40ants-pg-&amp;quot; and current thread name.&lt;/p&gt;&lt;p&gt;Function &lt;a href=&quot;https://40ants.com/40ants-pg/#x-2840ANTS-PG-2FQUERY-3ASELECT-DAO-BY-IDS-20FUNCTION-29&quot; data-document=&quot;https://40ants.com/40ants-pg/&quot; data-node=&quot;x-2840ANTS-PG-2FQUERY-3ASELECT-DAO-BY-IDS-20FUNCTION-29&quot;&gt;&lt;code&gt;40ants-pg/query:select-dao-by-ids&lt;/code&gt;&lt;/a&gt; now can accept customized query.&lt;/p&gt;</description>
+            <pubDate>Sat, 08 Feb 2025 00:00:00 +0000</pubDate>
+        </item>
+        <item>
+            <title>0.2.0  (2025-02-05)</title>
+            <description>&lt;ul&gt;&lt;li&gt;&lt;p&gt;Fixed error on non-external &lt;code&gt;convert-for-driver-type&lt;/code&gt; function.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</description>
+            <pubDate>Wed, 05 Feb 2025 00:00:00 +0000</pubDate>
+        </item>
+        <item>
+            <title>0.1.0  (2023-02-05)</title>
+            <description>&lt;ul&gt;&lt;li&gt;&lt;p&gt;Initial version.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</description>
+            <pubDate>Sun, 05 Feb 2023 00:00:00 +0000</pubDate>
+        </item>
+    </channel>
+</rss>
