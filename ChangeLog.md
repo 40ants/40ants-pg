@@ -2,6 +2,16 @@
 
 # ChangeLog
 
+<a id="x-2840ANTS-PG-DOCS-2FCHANGELOG-3A-3A-7C0-2E4-2E0-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+
+## 0.4.0 (2026-01-09)
+
+<a id="changes"></a>
+
+### Changes
+
+Now password, read from `DB_PASSWORD` is wrapped into `SECRET-VALUES:SECRET-VALUE` to prevent it's leak to the logs during printing backtrace.
+
 <a id="x-2840ANTS-PG-DOCS-2FCHANGELOG-3A-3A-7C0-2E3-2E0-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
 ## 0.3.0 (2025-02-08)
